@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame Composer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom styles for better UI feedback */
+        .preview-container {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Frame Composer</h1>
+            <p class="text-gray-600 mt-2">Fill in your details, upload a photo, and download your personalized frame.</p>
+        </header>
+
+
+
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- Controls Panel -->
+            <div class="w-full lg:w-1/3 bg-black p-3 md:p-4 lg:p-3 rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border-2 border-red-600">
+                <h2 class="text-base md:text-xl font-bold mb-3 md:mb-4 text-white border-b-2 border-red-500 pb-1 md:pb-2 text-center">Customize Your Frame</h2>
+                <div class="space-y-2 md:space-y-3">
+                    <div>
+                        <label for="fullName" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Full Name</label>
+                        <input type="text" id="fullName" value="Zayed Ul Karim" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
+                    </div>
+                    <div>
+                        <label for="college" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">College / Institute</label>
+                        <input type="text" id="college" value="Diploma In Civil Engineering" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
+                    </div>
+                     <div>
+                        <label for="course" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Course</label>
+                        <select id="course" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
+                            <option>AutoCAD Mastercourse</option>
+                            <option>Architectural Visualization Master Course</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="bio" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Short Bio / Title</label>
+                        <textarea id="bio" rows="2" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 resize-none text-xs">Civil Engineer | AutoCAD & Architectural Design Specialist</textarea>
+                    </div>
+                    <div>
+                        <label for="photoUpload" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Photo (Upload or URL)</label>
+                        <input type="file" id="photoUpload" accept="image/*" class="w-full text-xs text-white file:mr-2 md:file:mr-3 file:py-1 file:px-3 md:file:py-2 md:file:px-4 file:rounded file:border-0 file:text-xs file:font-bold file:bg-red-600 file:text-white hover:file:bg-red-700 file:transition-all file:duration-300">
+                        <input type="text" id="photoUrl" placeholder="Or paste image URL here" class="mt-1 md:mt-2 w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
+                    </div>
+                </div>
+
+                <div class="mt-3 md:mt-4 flex flex-col sm:flex-row gap-2 md:gap-3">
+                    <button id="previewBtn" class="w-full bg-red-600 text-white font-bold py-1 px-3 md:py-2 md:px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-all duration-300 transform hover:scale-105 shadow text-xs">
+                        Refresh Preview
+                    </button>
+                    <button id="downloadBtn" class="w-full bg-red-600 text-white font-bold py-1 px-3 md:py-2 md:px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-all duration-300 transform hover:scale-105 shadow text-xs">
+                        Download Image
+                    </button>
+                </div>
+                 <div class="mt-2 md:mt-3">
+                     <label for="downloadFormat" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Download Format</label>
+                     <select id="downloadFormat" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
+                         <option value="image/png">PNG</option>
+                         <option value="image/jpeg">JPG</option>
+                     </select>
+                </div>
+            </div>
+
+            <!-- Canvas Preview -->
+            <div class="w-full lg:w-2/3 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-lg">
+                <div class="w-full max-w-full preview-container rounded-lg overflow-hidden">
+                    <canvas id="previewCanvas" class="w-full h-auto"></canvas>
+                </div>
+                <p id="loadingStatus" class="mt-4 text-gray-600">Loading assets...</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Hidden canvas for high-resolution export -->
+    <canvas id="exportCanvas" style="display: none;"></canvas>
+
+    <script>
+        // --- CONFIGURATION --- //
+        const BACKGROUND_IMAGE_SRC = './image/Student-banner.png';
+
+        // FRAME_LAYOUT defines the absolute positions and styles for all dynamic elements.
+        // You can tweak these values without changing the drawing code.
+        const FRAME_LAYOUT = {
+            photo: {
+                // Mobile screen area positioned like in demo image
+                x: 1527, // right side positioning 
+                y: 118,   // top margin
+                width: 276, // mobile width
+                height: 523, // mobile height
+                borderRadius: 35 // rounded corners
+            },
+            text: {
+                fullName: {
+                    x: 1100,  // centered left positioning
+                    y: 280,  // vertical center positioning  
+                    font: "700 80px 'Poppins'",
+                    color: "#FFFFFF",
+                    textAlign: "center",
+                    maxWidth: 700
+                },
+                college: {
+                    x: 1120,  // same x as name
+                    y: 340,  // below name
+                    font: "100 40px 'Poppins'",
+                    color: "#FFFFFF", 
+                    textAlign: "center",
+                    maxWidth: 700
+                },
+                bio: {
+                    x: 840,  // same x alignment
+                    y: 400,  // below college
+                    font: "100 40px 'Poppins'",
+                    color: "#FFFFFF",
+                    textAlign: "center", 
+                    maxWidth: 1210,
+                    lineHeight: 40,
+                },
+                certification: {
+                    x: 750,  // same x alignment
+                    y: 460,  // below bio
+                    font: "400 30px 'Poppins'",
+                    color: "#FFFFFF",
+                    textAlign: "center",
+                    maxWidth: 1400,
+                    lineHeight: 28
+                }
+            }
+        };
+
+        // --- DOM ELEMENTS --- //
+        const previewCanvas = document.getElementById('previewCanvas');
+        const exportCanvas = document.getElementById('exportCanvas');
+        const previewCtx = previewCanvas.getContext('2d');
+        const exportCtx = exportCanvas.getContext('2d');
+
+        const fullNameInput = document.getElementById('fullName');
+        const collegeInput = document.getElementById('college');
+        const courseInput = document.getElementById('course');
+        const bioInput = document.getElementById('bio');
+        const photoUploadInput = document.getElementById('photoUpload');
+        const photoUrlInput = document.getElementById('photoUrl');
+        const previewBtn = document.getElementById('previewBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadFormatSelect = document.getElementById('downloadFormat');
+        const loadingStatus = document.getElementById('loadingStatus');
+
+        // --- STATE --- //
+        let bgImage = new Image();
+        let userImage = new Image();
+        userImage.crossOrigin = "Anonymous"; // Handle CORS for URL images
+        let assetsLoaded = false;
+        
+        // --- HELPER FUNCTIONS --- //
+
+        /**
+         * Draws text with wrapping based on a maxWidth property.
+         * @param {CanvasRenderingContext2D} ctx - The canvas context.
+         * @param {string} text - The text to draw.
+         * @param {number} x - The starting X coordinate.
+         * @param {number} y - The starting Y coordinate.
+         * @param {number} maxWidth - The maximum width for a line of text.
+         * @param {number} lineHeight - The height between lines.
+         */
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, currentY);
+        }
+
+        /**
+         * Creates a rounded rectangle path for clipping.
+         * @param {CanvasRenderingContext2D} ctx - The canvas context.
+         * @param {number} x - The top-left X coordinate.
+         * @param {number} y - The top-left Y coordinate.
+         * @param {number} width - The width of the rectangle.
+         * @param {number} height - The height of the rectangle.
+         * @param {number} radius - The corner radius.
+         */
+        function createRoundedRectPath(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        // --- CORE DRAWING LOGIC --- //
+
+        /**
+         * The main drawing function that renders everything onto a given canvas context.
+         * @param {CanvasRenderingContext2D} ctx - The context to draw on.
+         */
+        function drawCanvas(ctx) {
+            if (!assetsLoaded) return;
+
+            const canvas = ctx.canvas;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Draw the background
+            ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+            
+            // 2. Draw the user photo inside the mobile screen
+            if (userImage.src && userImage.complete && userImage.naturalWidth !== 0) {
+                ctx.save();
+                const photoLayout = FRAME_LAYOUT.photo;
+                // Create rounded rectangle clipping path for mobile screen
+                createRoundedRectPath(ctx, photoLayout.x, photoLayout.y, photoLayout.width, photoLayout.height, photoLayout.borderRadius);
+                ctx.clip();
+
+                // Object-fit: cover logic for mobile screen
+                const containerRatio = photoLayout.width / photoLayout.height;
+                const imageRatio = userImage.naturalWidth / userImage.naturalHeight;
+                let sx, sy, sWidth, sHeight;
+                if (imageRatio > containerRatio) {
+                    sHeight = userImage.naturalHeight;
+                    sWidth = sHeight * containerRatio;
+                    sx = (userImage.naturalWidth - sWidth) / 2;
+                    sy = 0;
+                } else {
+                    sWidth = userImage.naturalWidth;
+                    sHeight = sWidth / containerRatio;
+                    sx = 0;
+                    sy = (userImage.naturalHeight - sHeight) / 2;
+                }
+                ctx.drawImage(userImage, sx, sy, sWidth, sHeight, photoLayout.x, photoLayout.y, photoLayout.width, photoLayout.height);
+                ctx.restore();
+            }
+
+            // 3. Draw the text fields
+            const textLayout = FRAME_LAYOUT.text;
+            
+            // Full Name
+            let style = textLayout.fullName;
+            ctx.font = style.font;
+            ctx.fillStyle = style.color;
+            ctx.textAlign = style.textAlign;
+            ctx.fillText(fullNameInput.value, style.x, style.y, style.maxWidth);
+
+            // College
+            style = textLayout.college;
+            ctx.font = style.font;
+            ctx.fillStyle = style.color;
+            ctx.textAlign = style.textAlign;
+            ctx.fillText(collegeInput.value, style.x, style.y, style.maxWidth);
+
+            // Bio
+            style = textLayout.bio;
+            ctx.font = style.font;
+            ctx.fillStyle = style.color;
+            ctx.textAlign = style.textAlign;
+            wrapText(ctx, bioInput.value, style.x, style.y, style.maxWidth, style.lineHeight);
+
+            // Add border line at the bottom of Bio
+            ctx.strokeStyle = "#FFFFFF";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(style.x - style.maxWidth / 2.1, style.y + style.lineHeight + -25);
+            ctx.lineTo(style.x + style.maxWidth / 2.1, style.y + style.lineHeight + -25);
+            ctx.stroke();
+
+            // Certification
+            style = textLayout.certification;
+            const certificationText = `Professional ${courseInput.value} Graduate Certified by Autodesk ATC® (CADD CORE)`;
+            ctx.font = style.font;
+            ctx.fillStyle = style.color;
+            ctx.textAlign = style.textAlign;
+            wrapText(ctx, certificationText, style.x, style.y, style.maxWidth, style.lineHeight);
+
+            // 4. Draw dotted arrow (like in demo)
+          
+            
+           
+
+            
+            // Removed social media icons drawing due to undefined variables (socialStartX, socialY, socialSpacing)
+
+            // 6. Draw emoji overlays (like in demo)
+            const emojis = [
+                { emoji: "❤️", x: 1200, y: 150, size: 38 },
+            ];
+            
+            emojis.forEach(emojiObj => {
+                ctx.save();
+                // Background circle for emoji
+                ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+                ctx.beginPath();
+                ctx.arc(emojiObj.x, emojiObj.y, emojiObj.size/5 + 5, 0, 4 * Math.PI);
+                ctx.fill();
+                
+                // Emoji
+                ctx.font = `${emojiObj.size}px Arial`;
+                ctx.textAlign = "center";
+                ctx.fillText(emojiObj.emoji, emojiObj.x, emojiObj.y + emojiObj.size/3);
+                ctx.restore();
+            });
+        }
+        
+        // --- EVENT HANDLERS --- //
+        
+        function handleUpdate() {
+            drawCanvas(previewCtx);
+        }
+
+        function handlePhotoChange(src) {
+            loadingStatus.textContent = "Loading new photo...";
+            userImage.src = src;
+            userImage.onload = () => {
+                loadingStatus.textContent = "Photo loaded.";
+                handleUpdate();
+                setTimeout(() => loadingStatus.textContent = 'Preview ready.', 2000);
+            };
+            userImage.onerror = () => {
+                alert("Could not load the image. Please check the URL or file.");
+                loadingStatus.textContent = "Failed to load photo.";
+            }
+        }
+
+        photoUploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handlePhotoChange(URL.createObjectURL(file));
+                photoUrlInput.value = '';
+            }
+        });
+
+        photoUrlInput.addEventListener('change', (e) => {
+            if (e.target.value) {
+                handlePhotoChange(e.target.value);
+                photoUploadInput.value = '';
+            }
+        });
+
+        previewBtn.addEventListener('click', handleUpdate);
+        
+        downloadBtn.addEventListener('click', () => {
+            const format = downloadFormatSelect.value;
+            const quality = format === 'image/jpeg' ? 0.92 : 1.0;
+            const extension = format === 'image/jpeg' ? 'jpg' : 'png';
+            
+            loadingStatus.textContent = "Generating high-resolution image...";
+
+            // Use the same dimensions as preview canvas for consistency
+            exportCanvas.width = previewCanvas.width;
+            exportCanvas.height = previewCanvas.height;
+            
+            // Draw on the export canvas
+            drawCanvas(exportCtx);
+
+            // Trigger download
+            const link = document.createElement('a');
+            link.download = `frame-composition.${extension}`;
+            link.href = exportCanvas.toDataURL(format, quality);
+            link.click();
+            
+            loadingStatus.textContent = "Download started!";
+            setTimeout(() => loadingStatus.textContent = 'Preview ready.', 3000);
+        });
+
+        // Add listeners to all inputs to trigger a preview refresh
+        [fullNameInput, collegeInput, courseInput, bioInput].forEach(input => {
+            input.addEventListener('input', handleUpdate);
+        });
+
+
+        // --- INITIALIZATION --- //
+        window.onload = () => {
+            bgImage.src = BACKGROUND_IMAGE_SRC;
+            bgImage.onload = () => {
+                // Set canvas dimensions - using optimal size for demo layout
+                const canvasWidth = 1920;
+                const canvasHeight = 700;
+                
+                previewCanvas.width = canvasWidth;
+                previewCanvas.height = canvasHeight;
+                exportCanvas.width = canvasWidth;
+                exportCanvas.height = canvasHeight;
+
+                assetsLoaded = true;
+                loadingStatus.textContent = "Assets loaded. Ready to customize!";
+                
+                // Initial draw
+                handleUpdate();
+            };
+            bgImage.onerror = () => {
+                 loadingStatus.textContent = "Error: Could not load the background image.";
+                 alert("Fatal Error: The background image could not be loaded. The application cannot start.");
+            }
+        };
+
+    </script>
+</body>
+</html>
+
