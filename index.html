@@ -37,19 +37,21 @@
                 <div class="space-y-2 md:space-y-3">
                     <div>
                         <label for="fullName" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Full Name</label>
-                        <input type="text" id="fullName" value="Zayed Ul Karim" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
+                        <input type="text" id="fullName" value="ARIYAN RAKIB" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
                     </div>
                     <div>
                         <label for="college" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">College / Institute</label>
-                        <input type="text" id="college" value="Diploma In Civil Engineering" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
+                        <input type="text" id="college" value=" Pabna Polytechnic Institute" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
                     </div>
                      <div>
                         <label for="course" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Course</label>
                         <select id="course" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 text-xs">
-                            <option>AutoCAD Mastercourse</option>
+                            <option>AutoCAD Master Course</option>
                             <option>Architectural Visualization Master Course</option>
                         </select>
-                    </div>
+                    </div> 
+
+                    
                     <div>
                         <label for="bio" class="block text-xs font-semibold text-white mb-1 uppercase tracking-wide">Short Bio / Title</label>
                         <textarea id="bio" rows="2" class="w-full px-2 py-1 md:px-3 md:py-2 bg-gray-900 border border-white rounded shadow-sm text-white placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all duration-300 resize-none text-xs">Civil Engineer | AutoCAD & Architectural Design Specialist</textarea>
@@ -109,7 +111,7 @@
             },
             text: {
                 fullName: {
-                    x: 1100,  // centered left positioning
+                    x: 1050,  // centered left positioning
                     y: 280,  // vertical center positioning  
                     font: "700 80px 'Poppins'",
                     color: "#FFFFFF",
@@ -117,7 +119,7 @@
                     maxWidth: 700
                 },
                 college: {
-                    x: 1120,  // same x as name
+                    x: 1050,  // same x as name
                     y: 340,  // below name
                     font: "100 40px 'Poppins'",
                     color: "#FFFFFF", 
@@ -125,12 +127,12 @@
                     maxWidth: 700
                 },
                 bio: {
-                    x: 840,  // same x alignment
+                    x: 820,  // same x alignment
                     y: 400,  // below college
-                    font: "100 40px 'Poppins'",
+                    font: "100 36px 'Poppins'",
                     color: "#FFFFFF",
                     textAlign: "center", 
-                    maxWidth: 1210,
+                    maxWidth: 1410,
                     lineHeight: 40,
                 },
                 certification: {
@@ -292,8 +294,8 @@
             ctx.strokeStyle = "#FFFFFF";
             ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.moveTo(style.x - style.maxWidth / 2.1, style.y + style.lineHeight + -25);
-            ctx.lineTo(style.x + style.maxWidth / 2.1, style.y + style.lineHeight + -25);
+            ctx.moveTo(style.x - style.maxWidth / 2.4, style.y + style.lineHeight + -25);
+            ctx.lineTo(style.x + style.maxWidth / 2.4, style.y + style.lineHeight + -25);
             ctx.stroke();
 
             // Certification
