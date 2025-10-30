@@ -380,9 +380,14 @@
             ctx.lineTo(style.x + style.maxWidth / 2.4, style.y + style.lineHeight + -25);
             ctx.stroke();
 
-            // Certification
+            // Certification — include different text based on course
             style = textLayout.certification;
-            const certificationText = `Professional ${courseInput.value} Graduate Certified by Autodesk ATC® (CADD CORE)`;
+            let certificationText = `Professional ${courseInput.value} Graduate`;
+            if (courseInput.value && courseInput.value.trim() === 'AutoCAD Master Course') {
+                certificationText += ' — Certified by Autodesk ATC® (CADD CORE)';
+            } else if (courseInput.value && courseInput.value.trim() === 'Architectural Visualization Master Course') {
+                certificationText += ' by (CADD CORE)';
+            }
             ctx.font = style.font;
             ctx.fillStyle = style.color;
             ctx.textAlign = style.textAlign;
@@ -427,6 +432,11 @@
         previewBtn.addEventListener('click', handleUpdate);
         
         downloadBtn.addEventListener('click', () => {
+            if (!assetsLoaded) {
+                alert('Please wait until assets finish loading before downloading.');
+                return;
+            }
+
             const format = downloadFormatSelect.value;
             const quality = format === 'image/jpeg' ? 0.92 : 1.0;
             const extension = format === 'image/jpeg' ? 'jpg' : 'png';
@@ -436,24 +446,35 @@
             // Use the same dimensions as preview canvas for consistency
             exportCanvas.width = previewCanvas.width;
             exportCanvas.height = previewCanvas.height;
-            
-            // Draw on the export canvas
-            drawCanvas(exportCtx);
 
-            // Trigger download
-            const link = document.createElement('a');
-            link.download = `frame-composition.${extension}`;
-            link.href = exportCanvas.toDataURL(format, quality);
-            link.click();
-            
-            loadingStatus.textContent = "Download started!";
+            try {
+                // Draw on the export canvas
+                drawCanvas(exportCtx);
+
+                // Trigger download
+                const link = document.createElement('a');
+                link.download = `frame-composition.${extension}`;
+                link.href = exportCanvas.toDataURL(format, quality);
+                // For some browsers, a synthetic click may be blocked if not in user gesture, but
+                // this is inside a click handler so should be allowed. Wrap in try/catch to report errors.
+                link.click();
+                loadingStatus.textContent = "Download started!";
+            } catch (err) {
+                console.error('Error exporting image:', err);
+                alert('An error occurred while generating the image. Check the console for details.');
+                loadingStatus.textContent = "Failed to generate image.";
+            }
+
             setTimeout(() => loadingStatus.textContent = 'Preview ready.', 3000);
         });
 
-        // Add listeners to all inputs to trigger a preview refresh
-        [fullNameInput, collegeInput, courseInput, bioInput].forEach(input => {
+        // Add listeners to inputs to trigger a preview refresh
+        [fullNameInput, collegeInput, bioInput].forEach(input => {
             input.addEventListener('input', handleUpdate);
         });
+        // For the select element, listen for change (safer across browsers)
+        courseInput.addEventListener('change', handleUpdate);
+        courseInput.addEventListener('input', handleUpdate);
 
 
         // --- INITIALIZATION --- //
